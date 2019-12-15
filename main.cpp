@@ -101,7 +101,32 @@ void insertNode(DNODEPTR *list, DNODEPTR p, char k, bool right)
             printf("Adres hatasi! Dugum ekleme yapilamadi!\n");
     }
 }
+DNODEPTR tersListe(DNODEPTR p){ //çift bagli listeyi tanımladık.
+    DNODEPTR ters=NULL;         //listenin basına null atıyoruz
+    insertNode(&ters, NULL, p->info, true);
+    DNODEPTR yedek=ters;//listenin basını tutuyoruz
+    p=p->left;//p'yi sola dogru ılerletıyoruz
+    while (p != NULL)// p listesi NULL olmayana kadar ilerletiyoruz
+       {
+           insertNode(&ters, yedek, p->info, true);//her seferinde listeye p den eleman atılıyor
+           p = p->left; //p den sola dogru ilerleniyor
+           yedek=yedek->right; // olusacak listemiz saga dogru ilerletiliyor
+       }
+    return ters; // veri geri donduruluyor.
+};
 
+
+void printList(DNODEPTR p, bool isLeft)
+{
+    while (p != NULL)
+    {
+        printf("%c ", p->info);
+        if (isLeft)
+            p = p->left;
+        else
+            p = p->right;
+    }
+}
 
 
 class Stack
@@ -156,32 +181,6 @@ void reverse(char str[])
 
   
 
-DNODEPTR tersListe(DNODEPTR p){ //çift bagli listeyi tanımladık.
-    DNODEPTR ters=NULL;         //listenin basına null atıyoruz
-    insertNode(&ters, NULL, p->info, true);
-    DNODEPTR yedek=ters;//listenin basını tutuyoruz
-    p=p->left;//p'yi sola dogru ılerletıyoruz
-    while (p != NULL)// p listesi NULL olmayana kadar ilerletiyoruz
-       {
-           insertNode(&ters, yedek, p->info, true);//her seferinde listeye p den eleman atılıyor
-           p = p->left; //p den sola dogru ilerleniyor
-           yedek=yedek->right; // olusacak listemiz saga dogru ilerletiliyor
-       }
-    return ters; // veri geri donduruluyor.
-};
-
-
-void printList(DNODEPTR p, bool isLeft)
-{
-    while (p != NULL)
-    {
-        printf("%c ", p->info);
-        if (isLeft)
-            p = p->left;
-        else
-            p = p->right;
-    }
-}
 
 int main()
 {auto start2 = high_resolution_clock::now();
